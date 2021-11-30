@@ -1,0 +1,28 @@
+.randomplanet-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border: 2px solid grey;
+    margin: 10px auto;
+}
+.planet-img{
+    width: 100px;
+    height: 100px;
+    border-radius: 3px;
+}
+.list-group{
+    margin-bottom: 20px;
+}
+.list-group-item{
+    background-color: grey;
+}
+.list-group-item:hover{
+    cursor: pointer;
+    background-color: rgb(51, 51, 51);
+}
+.list-group-item span{
+    display: inline-block;
+    width: 10rem;
+    margin: 0 auto;
+}

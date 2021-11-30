@@ -1,0 +1,15 @@
+* {
+    list-style: none;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.main_body{
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: grey;
+    width: 30rem;
+    padding: 0.8rem;
+}
