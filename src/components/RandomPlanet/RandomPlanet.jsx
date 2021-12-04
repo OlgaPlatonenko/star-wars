@@ -21,18 +21,15 @@ export default class RandomPlanet extends Component {
         error: false,
     };
 
-
-    constructor() {
-        super();
+    componentDidMount() {
         this.updatePlanet();
-
     };
-
+    
     getRandomId() {
         return Math.floor(Math.random() * (20 - 1) + 1);
     }
 
-     id = this.getRandomId();
+    id = this.getRandomId();
     //id = 12000;
     onError = (err) => {
         this.setState({
