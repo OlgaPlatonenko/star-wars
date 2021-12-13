@@ -1,11 +1,65 @@
-import React, { useEffect, useImperativeHandle, useState } from 'react';
+import React, { Component, useEffect, useImperativeHandle, useState } from 'react';
 import { getApiPeople, getApiPerson } from '../../api/swapifunc';
 import PersonDetails from '../PersonDetails/PersonDetails';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
+import SwapiService from '../../api/swapi';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 import './ItemList.css';
 
-const ItemList = () => {
+export default class ItemList extends Component {
+    swapiService = new SwapiService();
+
+    state = {
+        peopleList: null,
+    };
+
+    componentDidMount() {
+        this.swapiService
+            .getApiPeople()
+            .then((peopleList) => {
+                this.setState({
+                    peopleList,
+                });
+            });
+    }
+
+
+    renderItems(arr) {
+        return arr.map(({ id, name }) => {
+            return (
+                <li
+                    className='list-group-item'
+                    key={id}
+                    onClick={() => this.props.onItemSelected(id)}>
+                    {name}
+                </li>
+            );
+        });
+    };
+
+    render() {
+
+        const { peopleList } = this.state;
+
+        const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
+
+        if (!peopleList) {
+            return <Spin indicator={antIcon} />;
+        }
+
+        const itemPeople = this.renderItems(peopleList);
+
+        return (
+            <div>
+                {itemPeople}
+            </div>
+        )
+    }
+}
+
+/*const ItemList = () => {
 
     const [persons, setPersons] = useState([]);
     const [activePerson, setActivePerson] = useState(true);
@@ -17,7 +71,7 @@ const ItemList = () => {
             .then((persons) => {
                 setPersons(persons);
             })
-            .catch(setError(true));
+           // .catch(setError(true));
     }, []);
 
     let element = null;
@@ -33,6 +87,7 @@ const ItemList = () => {
         });
     };
 
+    console.log(error);
 
     return (
         <div className='itemlist-container'>
@@ -57,4 +112,4 @@ const ItemList = () => {
     );
 }
 
-export default ItemList;
+export default ItemList;*/

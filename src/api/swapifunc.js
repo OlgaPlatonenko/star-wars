@@ -10,7 +10,7 @@ const getApiSwapi = async (url) => {
 };
 
 export const getApiPeople = async () => {
-    const persons = await getApiSwapi(`/people1/`);
+    const persons = await getApiSwapi(`/people/`);
     return persons.results;
 }
 

@@ -10,35 +10,46 @@ import PersonDetails from './components/PersonDetails/PersonDetails';
 import './main.css';
 
 const swapi = new SwapiService();
-swapi.getApiPeople().then(
-    (people) => {
+swapi.getApiPeople()
+    .then((people) => {
         console.log(people);
     });
 
-swapi.getApiPlanet().then(
-    (planets) => {
+swapi.getApiPlanet()
+    .then((planets) => {
         console.log(planets);
     });
 
-swapi.getApiStarship().then(
-    (startships) => {
+swapi.getApiStarship()
+    .then((startships) => {
         console.log(startships);
     }
-);
+    );
 
 export default class App extends Component {
 
+    state = {
+        selectedPerson: 5,
+    };
+
+    onPersonSelected = (id) => {       
+        this.setState({
+            selectedPerson: id,
+        });
+    };
+
     render() {
+      //  alert(this.state.selectedPerson);
         return (
             <div className='main-container' >
                 <Header />
                 <RandomPlanet />
                 <div className='main_body'>
-             
-                    <ItemList />
-                   
+                    <ItemList onItemSelected={this.onPersonSelected} />
+
                 </div>
-              
+                <PersonDetails personId={this.state.selectedPerson} />
+
             </div>
         );
     };
