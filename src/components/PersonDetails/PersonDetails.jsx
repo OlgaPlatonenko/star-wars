@@ -14,24 +14,22 @@ export default class ItemList extends Component {
         this.updatePerson();
     }
 
-   /* componentDidUpdate() {
-        this.updatePerson();
-    }*/
+    componentDidUpdate(prevProps){
+        if (this.props.personId !== prevProps.personId){
+            this.updatePerson();
+        }
+    }
 
     updatePerson() {
         const { personId } = this.props;
-        alert (personId);
         if (!personId) {
             return;
         }
         this.swapiService
             .getApiPerson(personId)
-            // .then((name) => alert(name))
             .then((person) => {
                 this.setState({ person });
             })
-        //.then(() => alert(this.state.name))
-
     };
 
     render() {
@@ -40,7 +38,7 @@ export default class ItemList extends Component {
         return (
             <div>
                 PersonDetails
-                <div> {name}</div>
+                <div> {name} {this.props.personId}</div>
                 <div>{id}</div>
                 <img className='person-details_card'
                     src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}></img>

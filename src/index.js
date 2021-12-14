@@ -29,17 +29,18 @@ swapi.getApiStarship()
 export default class App extends Component {
 
     state = {
-        selectedPerson: 5,
+        selectedPerson: 2,
     };
 
-    onPersonSelected = (id) => {       
+    onPersonSelected = (id) => {     
+        console.log('click');       
         this.setState({
             selectedPerson: id,
         });
     };
 
     render() {
-      //  alert(this.state.selectedPerson);
+
         return (
             <div className='main-container' >
                 <Header />
