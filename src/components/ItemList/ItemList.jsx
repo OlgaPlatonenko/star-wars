@@ -1,7 +1,4 @@
-import React, { Component, useEffect, useImperativeHandle, useState } from 'react';
-import { getApiPeople, getApiPerson } from '../../api/swapifunc';
-import PersonDetails from '../PersonDetails/PersonDetails';
-import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
+import React, { Component } from 'react';
 import SwapiService from '../../api/swapi';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';

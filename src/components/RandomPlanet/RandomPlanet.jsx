@@ -1,5 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
-import { getApiPlanet } from '../../api/swapifunc';
+import React, { Component } from 'react';
 import SwapiService from '../../api/swapi';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import { Spin } from 'antd';
@@ -24,7 +23,7 @@ export default class RandomPlanet extends Component {
     componentDidMount() {
         this.updatePlanet();
     };
-    
+
     getRandomId() {
         return Math.floor(Math.random() * (20 - 1) + 1);
     }
@@ -55,7 +54,7 @@ export default class RandomPlanet extends Component {
     };
 
     render() {
-        const { id, name, population, rotation_period, diameter, loading, error } = this.state;
+        const { loading, error } = this.state;
 
         const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
@@ -74,11 +73,13 @@ export default class RandomPlanet extends Component {
 }
 
 const PlanetView = ({ planets }) => {
-    const { id, name, population, rotation_period, diameter, loading } = planets;
+    const { id, name, population, rotation_period, diameter } = planets;
 
     return (
         <React.Fragment>
-            <img className='planet-img'
+            <img
+                className='planet-img'
+                alt='рандомная планета'
                 src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`} ></img>
 
             <div>

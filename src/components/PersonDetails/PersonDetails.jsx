@@ -14,8 +14,8 @@ export default class ItemList extends Component {
         this.updatePerson();
     }
 
-    componentDidUpdate(prevProps){
-        if (this.props.personId !== prevProps.personId){
+    componentDidUpdate(prevProps) {
+        if (this.props.personId !== prevProps.personId) {
             this.updatePerson();
         }
     }
@@ -40,14 +40,12 @@ export default class ItemList extends Component {
                 PersonDetails
                 <div> {name} {this.props.personId}</div>
                 <div>{id}</div>
-                <img className='person-details_card'
+                <img
+                    className='person-details_card'
+                    alt='персонаж'
                     src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}></img>
                 <h4>{birth_year}</h4>
-                <ul className='list-group list-group-flush'>
-                    <li className='list-group-item'>Gender</li>
-                    <li className='list-group-item'>Birth year</li>
-                    <li className='list-group-item'>Eye color</li>
-                </ul>
+
             </div>
         );
     };

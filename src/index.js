@@ -32,8 +32,7 @@ export default class App extends Component {
         selectedPerson: 2,
     };
 
-    onPersonSelected = (id) => {     
-        console.log('click');       
+    onPersonSelected = (id) => {
         this.setState({
             selectedPerson: id,
         });
@@ -47,9 +46,9 @@ export default class App extends Component {
                 <RandomPlanet />
                 <div className='main_body'>
                     <ItemList onItemSelected={this.onPersonSelected} />
-
+                    <PersonDetails personId={this.state.selectedPerson} />
                 </div>
-                <PersonDetails personId={this.state.selectedPerson} />
+
 
             </div>
         );
