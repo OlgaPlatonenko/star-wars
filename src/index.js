@@ -27,6 +27,7 @@ swapi.getApiStarship()
     );
 
 export default class App extends Component {
+    swapiService = new SwapiService();
 
     state = {
         selectedPerson: 2,
@@ -45,11 +46,29 @@ export default class App extends Component {
                 <Header />
                 <RandomPlanet />
                 <div className='main_body'>
-                    <ItemList onItemSelected={this.onPersonSelected} />
+                    <ItemList
+                        onItemSelected={this.onPersonSelected}
+                        getData={this.swapiService.getApiPeople} />
                     <PersonDetails personId={this.state.selectedPerson} />
                 </div>
 
-
+                <div className='row mb2'>
+                    <div className='col-mb-6'>
+                        <ItemList
+                            onItemSelected={this.onPersonSelected}
+                            getData={this.swapiService.getApiPlanet} />
+                    </div>
+                </div>
+                <div>
+                    Корабли:
+                </div>
+                <div className='row mb2'>
+                    <div className='col-mb-6'>
+                        <ItemList
+                            onItemSelected={this.onPersonSelected}
+                            getData={this.swapiService.getApiStarship} />
+                    </div>
+                </div>
             </div>
         );
     };

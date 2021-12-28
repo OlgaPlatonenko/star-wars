@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
-import SwapiService from '../../api/swapi';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import './ItemList.css';
 
 export default class ItemList extends Component {
-    swapiService = new SwapiService();
+
 
     state = {
-        peopleList: null,
+        itemList: null,
     };
 
     componentDidMount() {
-        this.swapiService
-            .getApiPeople()
-            .then((peopleList) => {
+        const { getData } = this.props;
+        getData()
+            .then((itemList) => {
                 this.setState({
-                    peopleList,
+                    itemList,
                 });
             });
     }
@@ -38,15 +37,15 @@ export default class ItemList extends Component {
 
     render() {
 
-        const { peopleList } = this.state;
+        const { itemList } = this.state;
 
         const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
-        if (!peopleList) {
+        if (!itemList) {
             return <Spin indicator={antIcon} />;
         }
 
-        const itemPeople = this.renderItems(peopleList);
+        const itemPeople = this.renderItems(itemList);
 
         return (
             <div>
