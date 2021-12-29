@@ -8,6 +8,7 @@ import ItemList from './components/ItemList/ItemList';
 import PersonDetails from './components/PersonDetails/PersonDetails';
 
 import './main.css';
+import Item from 'antd/lib/list/Item';
 
 const swapi = new SwapiService();
 swapi.getApiPeople()
@@ -48,25 +49,30 @@ export default class App extends Component {
                 <div className='main_body'>
                     <ItemList
                         onItemSelected={this.onPersonSelected}
-                        getData={this.swapiService.getApiPeople} />
+                        getData={this.swapiService.getApiPeople} 
+                        renderItem={({name,birth_year,eye_color}) => `${name} (${birth_year}, ${eye_color})`}/>
                     <PersonDetails personId={this.state.selectedPerson} />
+
                 </div>
 
-                <div className='row mb2'>
-                    <div className='col-mb-6'>
+                <div className='row md2'>
+                    <div className='col-md-6'>
                         <ItemList
                             onItemSelected={this.onPersonSelected}
-                            getData={this.swapiService.getApiPlanet} />
+                            getData={this.swapiService.getApiPlanet} 
+                            renderItem={(item) => item.name}/>
                     </div>
+
                 </div>
                 <div>
-                    Корабли:
+                    <span>Корабли</span>
                 </div>
-                <div className='row mb2'>
-                    <div className='col-mb-6'>
+                <div className='row md2'>
+                    <div className='col-md-6'>
                         <ItemList
                             onItemSelected={this.onPersonSelected}
-                            getData={this.swapiService.getApiStarship} />
+                            getData={this.swapiService.getApiStarship}
+                            renderItem={(item) => item.name} />
                     </div>
                 </div>
             </div>
