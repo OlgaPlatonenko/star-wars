@@ -51,8 +51,10 @@ export default class ItemList extends Component {
         const itemPeople = this.renderItems(itemList);
 
         return (
-            <div>
-                {itemPeople}
+            <div className='row mb2'>
+                <div className='col-md-12'>
+                    {itemPeople}
+                </div>
             </div>
         )
     }

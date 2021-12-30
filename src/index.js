@@ -60,7 +60,7 @@ export default class App extends Component {
                         <ItemList
                             onItemSelected={this.onPersonSelected}
                             getData={this.swapiService.getApiPlanet} 
-                            renderItem={(item) => item.name}/>
+                            renderItem={({name, diameter, population}) => `${name} (diametr: ${diameter}, population: ${population})`}/>
                     </div>
 
                 </div>
