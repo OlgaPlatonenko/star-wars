@@ -36,8 +36,7 @@ export default class ItemList extends Component {
         const { id, name, birth_year } = this.state.person;
 
         return (
-            <div>
-                PersonDetails
+            <div>               
                 <div> {name} {this.props.personId}</div>
                 <div>{id}</div>
                 <img

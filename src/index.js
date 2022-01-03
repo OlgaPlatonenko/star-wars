@@ -27,6 +27,19 @@ swapi.getApiStarship()
     }
     );
 
+const Row = ({ left, right }) => {
+    return (
+        <div className='row md2'>
+            <div className='col-md-6'>
+                {left}
+            </div>
+            <div className='col-md-6'>
+                {right}
+            </div>
+        </div>
+    );
+};
+
 export default class App extends Component {
     swapiService = new SwapiService();
 
@@ -42,39 +55,38 @@ export default class App extends Component {
 
     render() {
 
+        const itemListPeople = (
+            <ItemList
+                onItemSelected={this.onPersonSelected}
+                getData={this.swapiService.getApiPeople}
+                renderItem={({ name, birth_year, eye_color }) => `${name} (${birth_year}, ${eye_color})`} />
+        );
+
+        const personDetails = (
+            <PersonDetails personId={this.state.selectedPerson} />
+        );
+
+        const itemListPlanet = (
+            <ItemList
+                onItemSelected={this.onPersonSelected}
+                getData={this.swapiService.getApiPlanet}
+                renderItem={({ name, diameter, population }) => `${name} (diametr: ${diameter}, population: ${population})`} />
+        );
+
+        const itemListStarship = (
+            <ItemList
+                onItemSelected={this.onPersonSelected}
+                getData={this.swapiService.getApiStarship}
+                renderItem={(item) => item.name} />
+        );
+
         return (
             <div className='main-container' >
                 <Header />
                 <RandomPlanet />
-                <div className='main_body'>
-                    <ItemList
-                        onItemSelected={this.onPersonSelected}
-                        getData={this.swapiService.getApiPeople} 
-                        renderItem={({name,birth_year,eye_color}) => `${name} (${birth_year}, ${eye_color})`}/>
-                    <PersonDetails personId={this.state.selectedPerson} />
-
-                </div>
-
-                <div className='row md2'>
-                    <div className='col-md-6'>
-                        <ItemList
-                            onItemSelected={this.onPersonSelected}
-                            getData={this.swapiService.getApiPlanet} 
-                            renderItem={({name, diameter, population}) => `${name} (diametr: ${diameter}, population: ${population})`}/>
-                    </div>
-
-                </div>
-                <div>
-                    <span>Корабли</span>
-                </div>
-                <div className='row md2'>
-                    <div className='col-md-6'>
-                        <ItemList
-                            onItemSelected={this.onPersonSelected}
-                            getData={this.swapiService.getApiStarship}
-                            renderItem={(item) => item.name} />
-                    </div>
-                </div>
+                <Row left={itemListPeople} right={personDetails} />
+                <Row left={itemListPlanet} right='' />
+                <Row left={itemListStarship} right='' />
             </div>
         );
     };
