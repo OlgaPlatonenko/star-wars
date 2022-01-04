@@ -9,6 +9,7 @@ import PersonDetails from './components/PersonDetails/PersonDetails';
 
 import './main.css';
 import Item from 'antd/lib/list/Item';
+import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 
 const swapi = new SwapiService();
 swapi.getApiPeople()
@@ -40,6 +41,24 @@ const Row = ({ left, right }) => {
     );
 };
 
+class ErrorBoundry extends Component {
+    state = {
+        hasError: false,
+    }
+    componentDidCatch() {
+        this.setState({
+            hasError: true,
+        });
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return (<h1>ERROR</h1>);
+        }
+        return this.props.children;
+    }
+}
+
 export default class App extends Component {
     swapiService = new SwapiService();
 
@@ -59,7 +78,10 @@ export default class App extends Component {
             <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getApiPeople}
-                renderItem={({ name, birth_year, eye_color }) => `${name} (${birth_year}, ${eye_color})`} />
+            >
+                {(i) => (`${i.name} (${i.birth_year})`
+                )}
+            </ItemList>
         );
 
         const personDetails = (
@@ -70,20 +92,30 @@ export default class App extends Component {
             <ItemList
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getApiPlanet}
-                renderItem={({ name, diameter, population }) => `${name} (diametr: ${diameter}, population: ${population})`} />
+            >
+                {(i) => (`${i.name} (diametr: ${i.diameter}, population: ${i.population})`
+                )}
+            </ItemList>
         );
 
         const itemListStarship = (
-            <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getApiStarship}
-                renderItem={(item) => item.name} />
+            <ErrorBoundry>
+                <ItemList
+                    onItemSelected={this.onPersonSelected}
+                    getData={this.swapiService.getApiStarship}
+                >
+                    {(item) => item.name}
+                </ItemList>
+            </ErrorBoundry>
         );
 
         return (
             <div className='main-container' >
                 <Header />
-                <RandomPlanet />
+                <ErrorBoundry>
+                    <RandomPlanet />
+                </ErrorBoundry>
+
                 <Row left={itemListPeople} right={personDetails} />
                 <Row left={itemListPlanet} right='' />
                 <Row left={itemListStarship} right='' />

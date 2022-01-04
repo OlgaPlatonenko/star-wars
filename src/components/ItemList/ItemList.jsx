@@ -3,9 +3,27 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import './ItemList.css';
+import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
+
+class ErrorBoundry extends Component {
+    state = {
+        hasError: false,
+    }
+    componentDidCatch() {
+        this.setState({
+            hasError: true,
+        });
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return (<h1>ERROR</h1>);
+        }
+        return this.props.children;
+    }
+}
 
 export default class ItemList extends Component {
-
 
     state = {
         itemList: null,
@@ -25,8 +43,8 @@ export default class ItemList extends Component {
     renderItems(arr) {
         return arr.map((item) => {
             const { id } = item;
+            const label = this.props.children(item);
 
-            const label = this.props.renderItem(item);
             return (
                 <li
                     className='list-group-item'
@@ -51,11 +69,13 @@ export default class ItemList extends Component {
         const itemPeople = this.renderItems(itemList);
 
         return (
-            <div className='row mb2'>
-                <div className='col-md-12'>
-                    {itemPeople}
+            <ErrorBoundry>
+                <div className='row mb2'>
+                    <div className='col-md-12'>
+                        {itemPeople}
+                    </div>
                 </div>
-            </div>
+            </ErrorBoundry>
         )
     }
 }
