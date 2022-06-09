@@ -6,6 +6,8 @@ import Header from './components/Header/Header';
 import RandomPlanet from './components/RandomPlanet/RandomPlanet';
 import ItemList from './components/ItemList/ItemList';
 import PersonDetails from './components/PersonDetails/PersonDetails';
+import Row from './components/Row/Row';
+import ErrorBoundry from './components/ErrorBoundry/ErrorBoundry';
 
 import './main.css';
 import Item from 'antd/lib/list/Item';
@@ -28,37 +30,6 @@ swapi.getApiStarship()
     }
     );
 
-const Row = ({ left, right }) => {
-    return (
-        <div className='row md2'>
-            <div className='col-md-6'>
-                {left}
-            </div>
-            <div className='col-md-6'>
-                {right}
-            </div>
-        </div>
-    );
-};
-
-class ErrorBoundry extends Component {
-    state = {
-        hasError: false,
-    }
-    componentDidCatch() {
-        this.setState({
-            hasError: true,
-        });
-    }
-
-    render() {
-        if (this.state.hasError) {
-            return (<h1>ERROR</h1>);
-        }
-        return this.props.children;
-    }
-}
-
 export default class App extends Component {
     swapiService = new SwapiService();
 
@@ -79,7 +50,8 @@ export default class App extends Component {
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getApiPeople}
             >
-                {(i) => (`${i.name} (${i.birth_year})`
+                {(i) => (
+                    `${i.name} (${i.birth_year})`
                 )}
             </ItemList>
         );
@@ -93,20 +65,18 @@ export default class App extends Component {
                 onItemSelected={this.onPersonSelected}
                 getData={this.swapiService.getApiPlanet}
             >
-                {(i) => (`${i.name} (diametr: ${i.diameter}, population: ${i.population})`
+                {(i) => (<span>{i.name} <button>!</button> {i.diameter} {i.population}</span>
                 )}
             </ItemList>
         );
 
         const itemListStarship = (
-            <ErrorBoundry>
-                <ItemList
-                    onItemSelected={this.onPersonSelected}
-                    getData={this.swapiService.getApiStarship}
-                >
-                    {(item) => item.name}
-                </ItemList>
-            </ErrorBoundry>
+            <ItemList
+                onItemSelected={this.onPersonSelected}
+                getData={this.swapiService.getApiStarship}
+            >
+                {(item) => item.name}
+            </ItemList>
         );
 
         return (
@@ -114,11 +84,12 @@ export default class App extends Component {
                 <Header />
                 <ErrorBoundry>
                     <RandomPlanet />
+                    <Row left={itemListPeople} right={personDetails} />
+                    <br></br>
+                    <Row left={itemListPlanet} right='' />
+                    <br></br>
+                    <Row left={itemListStarship} right='' />
                 </ErrorBoundry>
-
-                <Row left={itemListPeople} right={personDetails} />
-                <Row left={itemListPlanet} right='' />
-                <Row left={itemListStarship} right='' />
             </div>
         );
     };

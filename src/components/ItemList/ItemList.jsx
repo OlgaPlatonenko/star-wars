@@ -4,24 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 import './ItemList.css';
 import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
-
-class ErrorBoundry extends Component {
-    state = {
-        hasError: false,
-    }
-    componentDidCatch() {
-        this.setState({
-            hasError: true,
-        });
-    }
-
-    render() {
-        if (this.state.hasError) {
-            return (<h1>ERROR</h1>);
-        }
-        return this.props.children;
-    }
-}
+import ErrorBoundry from '../ErrorBoundry/ErrorBoundry';
 
 export default class ItemList extends Component {
 

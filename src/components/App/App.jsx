@@ -6,8 +6,8 @@ import './App.css';
 const App = () => {
     return (
         <div>
-            <Header />
-            <Header />
+            <Header />   
+          
         </div>
     );
 }
