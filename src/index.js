@@ -39,7 +39,7 @@ export default class App extends Component {
         selectedPerson: 2,
     };
 
-    onPersonSelected = (id) => {
+    onItemSelected = (id) => {
         this.setState({
             selectedPerson: id,
         });
@@ -49,7 +49,7 @@ export default class App extends Component {
 
         const itemListPeople = (
             <ItemList
-                onItemSelected={this.onPersonSelected}
+                onItemSelected={this.onItemSelected}
                 getData={this.swapiService.getApiPeople}
             >
                 {(i) => (

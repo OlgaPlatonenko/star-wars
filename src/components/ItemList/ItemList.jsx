@@ -1,27 +1,12 @@
 import React, { Component } from 'react';
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { withData } from '../hoc';
 
 import './ItemList.css';
-import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 import ErrorBoundry from '../ErrorBoundry/ErrorBoundry';
+import { render } from '@testing-library/react';
+import SwapiService from '../../api/swapi';
 
-export default class ItemList extends Component {
-
-    state = {
-        itemList: null,
-    };
-
-    componentDidMount() {
-        const { getData } = this.props;
-        getData()
-            .then((itemList) => {
-                this.setState({
-                    itemList,
-                });
-            });
-    }
-
+class ItemList9 extends Component {
 
     renderItems(arr) {
         return arr.map((item) => {
@@ -41,15 +26,8 @@ export default class ItemList extends Component {
 
     render() {
 
-        const { itemList } = this.state;
-
-        const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
-
-        if (!itemList) {
-            return <Spin indicator={antIcon} />;
-        }
-
-        const itemPeople = this.renderItems(itemList);
+        const { data } = this.props;
+        const itemPeople = this.renderItems(data);
 
         return (
             <ErrorBoundry>
@@ -61,7 +39,42 @@ export default class ItemList extends Component {
             </ErrorBoundry>
         )
     }
-}
+};
+
+const ItemList = (props) => {
+
+    const { data, onItemSelected, children: renderLabel } = props;
+
+    const items = data.map((item) => {
+        const { id } = item;
+        const label = renderLabel(item);
+
+        return (
+            <li
+                className='list-group-item'
+                key={id}
+                onClick={() => onItemSelected(id)}>
+                {label}
+            </li>
+        );
+    }
+    );
+
+    return (
+        <ErrorBoundry>
+            <div className='row mb2'>
+                <div className='col-md-12'>
+                    {items}
+                </div>
+            </div>
+        </ErrorBoundry>
+    );
+};
+
+
+
+const { getApiPeople } = new SwapiService();
+export default withData(ItemList, getApiPeople);
 
 /*const ItemList = () => {
 
