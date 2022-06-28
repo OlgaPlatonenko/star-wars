@@ -9,9 +9,10 @@ const withData = (View, getData) => {
         };
 
         componentDidMount() {
-
             getData()
                 .then((data) => {
+                    console.log('DATA');
+                    console.log(data);
                     this.setState({
                         data,
                     });

@@ -13,24 +13,16 @@ import './main.css';
 import Item from 'antd/lib/list/Item';
 import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 
+import {
+    PersonDetails,
+    PlanetDetails,
+    StarshipDetails,
+    PersonList,
+    PlanetList,
+    StarshipList,
+} from './components/sw-components'
+
 const swapi = new SwapiService();
-/*
-swapi.getApiPeople()
-    .then((people) => {
-        console.log(people);
-    });
-
-swapi.getApiPlanet()
-    .then((planets) => {
-        console.log(planets);
-    });
-
-swapi.getApiStarship()
-    .then((startships) => {
-        console.log(startships);
-    }
-    );
-    */
 
 export default class App extends Component {
     swapiService = new SwapiService();
@@ -47,16 +39,35 @@ export default class App extends Component {
 
     render() {
 
-        const itemListPeople = (
-            <ItemList
-                onItemSelected={this.onItemSelected}
-                getData={this.swapiService.getApiPeople}
-            >
-                {(i) => (
-                    `${i.name} (${i.birth_year})`
-                )}
-            </ItemList>
-        );
+        /*    const itemListPeople = (
+                <ItemList
+                    onItemSelected={this.onItemSelected}
+                    getData={this.swapiService.getApiPeople}
+                >
+                    {(i) => (
+                        `${i.name} (${i.birth_year})`
+                    )}
+                </ItemList>
+            );*/
+
+        /*   const itemListPlanet = (
+           <ItemList
+               onItemSelected={this.onPersonSelected}
+               getData={this.swapiService.getApiPlanet}
+           >
+               {(i) => (<span>{i.name} <button>!</button> {i.diameter} {i.population}</span>
+               )}
+           </ItemList>
+       );*/
+
+        /*   const itemListStarship = (
+               <ItemList
+                   onItemSelected={this.onPersonSelected}
+                   getData={this.swapiService.getApiStarship}
+               >
+                   {(item) => item.name}
+               </ItemList>
+           );*/
 
         const itemDetails = (
             <ItemDetails
@@ -66,24 +77,6 @@ export default class App extends Component {
             />
         );
 
-        const itemListPlanet = (
-            <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getApiPlanet}
-            >
-                {(i) => (<span>{i.name} <button>!</button> {i.diameter} {i.population}</span>
-                )}
-            </ItemList>
-        );
-
-        const itemListStarship = (
-            <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getApiStarship}
-            >
-                {(item) => item.name}
-            </ItemList>
-        );
 
         const { getApiPerson,
             getApiStarshipById,
@@ -115,19 +108,23 @@ export default class App extends Component {
         return (
             <div className='main-container' >
                 <Header />
-                <Row
-                    left={personDetails}
-                    right={starshipDetails}
-                />
                 <ErrorBoundry>
+                    <PersonDetails itemId={11} />
+                    <PlanetDetails itemId={5} />
+                    <StarshipDetails itemId={12} />
+                    <PersonList >
+                        {({ name }) => <span>{name}</span>}
+                    </PersonList>
+                    <br />
+                    <PlanetList>
+                        {({ name }) => <span>{name}</span>}
+                    </PlanetList>
+                    <br />
+                    <StarshipList>
+                        {({ name }) => <span>{name}</span>}
+                    </StarshipList>
                     <RandomPlanet />
-                    <Row left={itemListPeople} right={itemDetails} />
-                    <br></br>
-                    <Row left={itemListPlanet} right='' />
-                    <br></br>
-                    <Row left={itemListStarship} right='' />
                 </ErrorBoundry>
-
             </div>
         );
     };

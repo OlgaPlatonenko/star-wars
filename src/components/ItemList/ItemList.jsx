@@ -44,7 +44,7 @@ class ItemList9 extends Component {
 const ItemList = (props) => {
 
     const { data, onItemSelected, children: renderLabel } = props;
-
+   
     const items = data.map((item) => {
         const { id } = item;
         const label = renderLabel(item);
@@ -54,7 +54,7 @@ const ItemList = (props) => {
                 className='list-group-item'
                 key={id}
                 onClick={() => onItemSelected(id)}>
-                {label}
+                { label }
             </li>
         );
     }
@@ -72,9 +72,7 @@ const ItemList = (props) => {
 };
 
 
-
-const { getApiPeople } = new SwapiService();
-export default withData(ItemList, getApiPeople);
+export default ItemList;
 
 /*const ItemList = () => {
 
