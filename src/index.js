@@ -8,10 +8,8 @@ import ItemList from './components/ItemList/ItemList';
 import ItemDetails, { Record } from './components/ItemDetails/ItemDetails';
 import Row from './components/Row/Row';
 import ErrorBoundry from './components/ErrorBoundry/ErrorBoundry';
-
+import { SwapiServiceProvider } from './components/swapi-service-context';
 import './main.css';
-import Item from 'antd/lib/list/Item';
-import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 
 import {
     PersonDetails,
@@ -106,26 +104,23 @@ export default class App extends Component {
         )
 
         return (
-            <div className='main-container' >
-                <Header />
-                <ErrorBoundry>
-                    <PersonDetails itemId={11} />
-                    <PlanetDetails itemId={5} />
-                    <StarshipDetails itemId={12} />
-                    <PersonList >
-                        {({ name }) => <span>{name}</span>}
-                    </PersonList>
-                    <br />
-                    <PlanetList>
-                        {({ name }) => <span>{name}</span>}
-                    </PlanetList>
-                    <br />
-                    <StarshipList>
-                        {({ name }) => <span>{name}</span>}
-                    </StarshipList>
-                    <RandomPlanet />
-                </ErrorBoundry>
-            </div>
+            <SwapiServiceProvider value={this.swapiService}>
+                <div className='main-container' >
+                    <Header />
+                    <ErrorBoundry>
+                        <PersonDetails itemId={11} />
+                        <PlanetDetails itemId={5} />
+                        <StarshipDetails itemId={12} />
+                        <PersonList />
+                        <br />
+                        <PlanetList />
+                        <br />
+                        <StarshipList />
+
+                        <RandomPlanet />
+                    </ErrorBoundry>
+                </div>
+            </SwapiServiceProvider>
         );
     };
 

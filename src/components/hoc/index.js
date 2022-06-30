@@ -1,5 +1,7 @@
-import withData from "./withData";
+import withData from './withData';
+import withSwapiService from './withSwapiService';
 
 export {
-    withData
+    withData,
+    withSwapiService,
 };

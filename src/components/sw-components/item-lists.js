@@ -11,11 +11,36 @@ const {
     getApiPlanet,
 } = swapiService;
 
-const PersonList = withData(ItemList,getApiPeople);
+//устанавливает в качестве children любую функцию компоненту
+const withChildFunction = (Wrapped, fn) => {
+    return (props) => {
+        return (
+            <Wrapped {...props}>
+                {fn}
+            </Wrapped>
+        )
+    }
+};
 
-const PlanetList = withData(ItemList,getApiPlanet);
+//это ItemList с рендер-функцией
+const renderName = ({ name }) => <span>{name}</span>;
+const renderModelAndName = ({model,name}) => {
+return(
+    <span>{name} ({model})</span>
+)
+};
 
-const StarshipList = withData(ItemList,getApiStarship);
+const PersonList = withData(
+    withChildFunction(ItemList, renderName),
+    getApiPeople);
+
+const PlanetList = withData(
+    withChildFunction(ItemList, renderName),
+    getApiPlanet);
+
+const StarshipList = withData(
+    withChildFunction(ItemList, renderModelAndName),
+    getApiStarship);
 
 export {
     PersonList,
