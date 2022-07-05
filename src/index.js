@@ -108,7 +108,7 @@ export default class App extends Component {
                 <div className='main-container' >
                     <Header />
                     <ErrorBoundry>
-                        <PersonDetails itemId={11} />
+                        <PersonDetails itemId={2} /> 
                         <PlanetDetails itemId={5} />
                         <StarshipDetails itemId={12} />
                         <PersonList />

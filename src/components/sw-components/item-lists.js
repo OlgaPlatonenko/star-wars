@@ -1,15 +1,6 @@
 import React from 'react';
-import { withData } from '../hoc';
-import SwapiService from '../../api/swapi';
+import { withData, withSwapiService } from '../hoc';
 import ItemList from '../ItemList/ItemList';
-
-const swapiService = new SwapiService();
-
-const {
-    getApiPeople,
-    getApiStarship,
-    getApiPlanet,
-} = swapiService;
 
 //устанавливает в качестве children любую функцию компоненту
 const withChildFunction = (Wrapped, fn) => {
@@ -24,23 +15,44 @@ const withChildFunction = (Wrapped, fn) => {
 
 //это ItemList с рендер-функцией
 const renderName = ({ name }) => <span>{name}</span>;
-const renderModelAndName = ({model,name}) => {
-return(
-    <span>{name} ({model})</span>
-)
+const renderModelAndName = ({ model, name }) => {
+    return (
+        <span>{name} ({model})</span>
+    )
 };
 
-const PersonList = withData(
-    withChildFunction(ItemList, renderName),
-    getApiPeople);
+const mapPersonToProps = (swapiService) => {
+    return {
+        getData: swapiService.getApiPeople
+    }
+};
 
-const PlanetList = withData(
-    withChildFunction(ItemList, renderName),
-    getApiPlanet);
+const mapPlanetToProps = (swapiService) => {
+    return {
+        getData: swapiService.getApiPlanet
+    }
+};
 
-const StarshipList = withData(
-    withChildFunction(ItemList, renderModelAndName),
-    getApiStarship);
+const mapStarshipToProps = (swapiService) => {
+    return {
+        getData: swapiService.getApiStarship
+    }
+};
+
+const PersonList = withSwapiService(
+    withData(
+        withChildFunction(ItemList, renderName)),
+    mapPersonToProps);
+
+const PlanetList = withSwapiService(
+    withData(
+        withChildFunction(ItemList, renderName)),
+    mapPlanetToProps);
+
+const StarshipList = withSwapiService(
+    withData(
+        withChildFunction(ItemList, renderModelAndName)),
+    mapStarshipToProps);
 
 export {
     PersonList,

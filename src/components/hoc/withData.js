@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
-const withData = (View, getData) => {
+const withData = (View) => {
     return class extends Component {
         state = {
             data: null,
         };
 
         componentDidMount() {
-            getData()
+           this.props.getData()
                 .then((data) => {
-                    console.log('DATA');
-                    console.log(data);
                     this.setState({
                         data,
                     });

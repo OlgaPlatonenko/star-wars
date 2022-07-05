@@ -3,19 +3,20 @@ import ItemDetails, { Record } from '../ItemDetails/ItemDetails';
 import { SwapiServiceConsumer } from '../swapi-service-context';
 import { withSwapiService } from '../hoc';
 
-const StarshipDetails = ({ itemId, swapiService }) => {
-    const { getApiStarshipById, getStarshipImage } = swapiService;
-
+const StarshipDetails = (props) => {
     return (
-        <ItemDetails
-            itemId={itemId}
-            getData={getApiStarshipById}
-            getImageUrl={getStarshipImage}
-        >
+        <ItemDetails {...props}        >
             <Record field='model' label='Model' />
             <Record field='length' label='Length' />
         </ItemDetails>
     );
 };
 
-export default withSwapiService(StarshipDetails);
+const mapServiceToProps = (swapiService) => {
+    return {
+        getData: swapiService.getApiStarshipById,
+        getImageUrl: swapiService.getStarshipImage,
+    }
+}
+
+export default withSwapiService(StarshipDetails, mapServiceToProps);
