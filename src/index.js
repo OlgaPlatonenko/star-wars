@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import SwapiService from "./api/swapi";
+import DummySwapiService from './api/dummy-swapi-service';
 import Header from './components/Header/Header';
 import RandomPlanet from './components/RandomPlanet/RandomPlanet';
-import ItemList from './components/ItemList/ItemList';
 import ItemDetails, { Record } from './components/ItemDetails/ItemDetails';
-import Row from './components/Row/Row';
 import ErrorBoundry from './components/ErrorBoundry/ErrorBoundry';
 import { SwapiServiceProvider } from './components/swapi-service-context';
 import './main.css';
@@ -20,19 +19,28 @@ import {
     StarshipList,
 } from './components/sw-components'
 
-const swapi = new SwapiService();
-
 export default class App extends Component {
-    swapiService = new SwapiService();
-
+  
     state = {
         selectedPerson: 2,
+        swapiService: new SwapiService(),
     };
 
     onItemSelected = (id) => {
         this.setState({
             selectedPerson: id,
         });
+    };
+
+    onServiceChange = () => {
+        this.setState(({swapiService}) => {
+            const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+            console.log('service changed', Service.name);
+            return{
+                swapiService: new Service()
+            };
+        });
+       
     };
 
     render() {
@@ -69,8 +77,8 @@ export default class App extends Component {
 
         const itemDetails = (
             <ItemDetails
-                getData={this.swapiService.getApiPerson}
-                getImageUrl={this.swapiService.getPersonImage}
+                getData={this.state.swapiService.getApiPerson}
+                getImageUrl={this.state.swapiService.getPersonImage}
                 itemId={this.state.selectedPerson}
             />
         );
@@ -79,7 +87,7 @@ export default class App extends Component {
         const { getApiPerson,
             getApiStarshipById,
             getPersonImage,
-            getStarshipImage } = this.swapiService;
+            getStarshipImage } = this.state.swapiService;
 
         const personDetails = (
             <ItemDetails
@@ -104,11 +112,11 @@ export default class App extends Component {
         )
 
         return (
-            <SwapiServiceProvider value={this.swapiService}>
+            <SwapiServiceProvider value={this.state.swapiService}>
                 <div className='main-container' >
-                    <Header />
+                    <Header onServiceChange={this.onServiceChange} />
                     <ErrorBoundry>
-                        <PersonDetails itemId={2} /> 
+                        <PersonDetails itemId={2} />
                         <PlanetDetails itemId={5} />
                         <StarshipDetails itemId={12} />
                         <PersonList />

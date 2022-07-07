@@ -36,7 +36,7 @@ export default class ItemList extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId) {
+        if (this.props.personId !== prevProps.personId || this.props.getData !== prevProps.getData) {
             this.updateItem();
         }
     }
