@@ -36,15 +36,16 @@ export default class ItemList extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.personId !== prevProps.personId || this.props.getData !== prevProps.getData) {
+        if (this.props.personId !== prevProps.personId || this.props.getData !== prevProps.getData || this.props.itemId !== prevProps.itemId) {
             this.updateItem();
         }
     }
 
     updateItem() {
         const { itemId, getData, getImageUrl } = this.props;
+        
         if (!itemId) {
-            return;
+            return ;
         }
         getData(itemId)
             .then((item) => {
@@ -56,7 +57,7 @@ export default class ItemList extends Component {
     };
 
     render() {
-        const { id, name, birth_year, gender, eye_color } = this.state.item;
+        const { name } = this.state.item;
         const item = this.state.item;
         const { image } = this.state;
 

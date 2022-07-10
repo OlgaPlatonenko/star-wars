@@ -1,6 +1,5 @@
 import React from 'react';
 import ItemDetails, { Record } from '../ItemDetails/ItemDetails';
-import { SwapiServiceConsumer } from '../swapi-service-context';
 import { withSwapiService } from '../hoc';
 
 const StarshipDetails = (props) => {

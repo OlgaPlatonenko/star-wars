@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import { withData } from '../hoc';
-
+import React from 'react';
 import './ItemList.css';
 import ErrorBoundry from '../ErrorBoundry/ErrorBoundry';
-import { render } from '@testing-library/react';
-import SwapiService from '../../api/swapi';
 
+/*
 class ItemList9 extends Component {
 
     renderItems(arr) {
@@ -40,11 +37,12 @@ class ItemList9 extends Component {
         )
     }
 };
+*/
 
 const ItemList = (props) => {
 
     const { data, onItemSelected, children: renderLabel } = props;
-   
+    
     const items = data.map((item) => {
         const { id } = item;
         const label = renderLabel(item);
@@ -53,8 +51,9 @@ const ItemList = (props) => {
             <li
                 className='list-group-item'
                 key={id}
-                onClick={() => onItemSelected(id)}>
-                { label }
+                onClick={() => onItemSelected(id)}
+            >
+                {label}
             </li>
         );
     }
